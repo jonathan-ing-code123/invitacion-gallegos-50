@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>¡Nuestros 50 Años! | Noe & Micaela</title>
+
+  <!-- Google Fonts: Cormorant Garamond, Montserrat y Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,500;1,600;1,700&display=swap"
+    rel="stylesheet">
+
+  <!-- FontAwesome & Canvas Confetti -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      /* Verde pastel bien visible y distinguible (Salvia / Menta Suave) */
+      --green-pastel-bg: #d7edd9;
+      --green-pastel-gradient: linear-gradient(160deg, #d8eedb 0%, #c1e3c6 50%, #b2dcb8 100%);
+      --green-card-bg: #eff7f1;
+      --green-accent: #3e6d49;
+      --green-dark: #16331e;
+      --green-muted: #4e7358;
+
+      /* Acentos Dorados Radiantes */
+      --gold-primary: #d4af37;
+      --gold-deep: #b38b1d;
+      --gold-gradient: linear-gradient(135deg, #c59b27 0%, #fae682 50%, #c29523 100%);
+      --gold-shimmer-border: linear-gradient(135deg, #dfbc4d, #f9ebb2, #b88f28);
+      --gold-glow: 0 0 18px rgba(212, 175, 55, 0.45);
+      --card-shadow: 0 12px 30px rgba(22, 51, 30, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      width: 100%;
+      overflow-x: hidden;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--green-pastel-gradient);
+      background-attachment: fixed;
+      color: var(--green-dark);
+      scroll-behavior: smooth;
+    }
+
+    /* Tipografías: Playfair Display Italic para cursiva limpia y ultra legible */
+    .font-serif {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .font-script {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    /* Fondo de partículas doradas */
+    #gold-dust-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ============================================================
+       1. ENVELOPE / APERTURA DE SOBRE (OPTIMIZADO MÓVIL)
+       ============================================================ */
+    .envelope-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, #cbe5cf 0%, #9fcfa6 100%);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s ease;
+    }
+
+    .envelope-overlay.opened {
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .envelope-box {
+      width: 100%;
+      max-width: 360px;
+      background: #ffffff;
+      border-radius: 26px;
+      padding: 35px 22px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(18, 43, 24, 0.25), 0 0 0 3px rgba(212, 175, 55, 0.5);
+      border: 2px solid #e5c96b;
+      position: relative;
+    }
+
+    .wax-seal {
+      width: 78px;
+      height: 78px;
+      background: radial-gradient(circle, #ffe68a 0%, #c49924 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 8px 24px rgba(184, 134, 11, 0.5), inset 0 2px 4px rgba(255, 255, 255, 0.8);
+      cursor: pointer;
+      border: 3px solid #f6e08c;
+      animation: pulseSeal 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulseSeal {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.08);
+        box-shadow: 0 12px 30px rgba(184, 134, 11, 0.7);
+      }
+    }
+
+    .wax-seal span {
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: #3b2804;
+      font-family: 'Cormorant Garamond', serif;
+      line-height: 1;
+    }
+
+    /* Botón Shimmer Dorado */
+    .btn-gold {
+      background: var(--gold-gradient);
+      color: #2b1f02;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      padding: 14px 28px;
+      border-radius: 50px;
+      border: 1px solid #ebd372;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(184, 134, 11, 0.4);
+      position: relative;
+      overflow: hidden;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none;
+      width: 100%;
+      max-width: 290px;
+      transition: all 0.25s ease;
+    }
+
+    .btn-gold::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -100%;
+      width: 60%;
+      height: 200%;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.7) 50%, rgba(255, 255, 255, 0) 100%);
+      transform: rotate(30deg);
+      animation: goldShine 3s infinite;
+    }
+
+    @keyframes goldShine {
+      0% {
+        left: -100%;
+      }
+
+      25% {
+        left: 200%;
+      }
+
+      100% {
+        left: 200%;
+      }
+    }
+
+    .btn-gold:active {
+      transform: scale(0.97);
+    }
+
+    /* Botón cuando ya está confirmado */
+    .btn-gold.confirmed {
+      background: linear-gradient(135deg, #3e6d49 0%, #528a63 100%);
+      color: #ffffff;
+      border-color: #74c69d;
+      cursor: default;
+      box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
+    }
+
+    .btn-gold.confirmed::after {
+      display: none;
+    }
+
+    /* ============================================================
+       2. CONTENEDOR PRINCIPAL & HEADER
+       ============================================================ */
+    .main-wrapper {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 24px 16px 80px;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 40px 10px 20px;
+    }
+
+    .badge-50 {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 18px;
+      border: 1.5px solid #d4af37;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      border-radius: 30px;
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 16px;
+      box-shadow: 0 4px 12px rgba(22, 51, 30, 0.08);
+    }
+
+    /* Título con cursiva limpia y legible */
+    .couple-title {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: clamp(2.5rem, 8.5vw, 4.4rem);
+      line-height: 1.15;
+      color: #a88118;
+      text-shadow: 0 2px 10px rgba(212, 175, 55, 0.25);
+      margin-bottom: 4px;
+    }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 5.5vw, 2.7rem);
+      font-weight: 700;
+      color: var(--green-dark);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      line-height: 1.2;
+    }
+
+    .gold-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin: 16px auto;
+    }
+
+    .gold-divider::before,
+    .gold-divider::after {
+      content: '';
+      height: 2px;
+      width: 55px;
+      background: linear-gradient(90deg, transparent, #c59b27, transparent);
+    }
+
+    .hero-text {
+      max-width: 580px;
+      margin: 0 auto;
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: var(--green-muted);
+      font-weight: 500;
+      padding: 0 10px;
+    }
+
+    /* ============================================================
+       3. SECCIÓN DE CUMPLEAÑEROS (FOTOS FIJAS)
+       ============================================================ */
+    .couple-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin: 35px 0 25px;
+    }
+
+    @media (min-width: 768px) {
+      .couple-section {
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
+        gap: 25px;
+      }
+    }
+
+    .person-card {
+      background: var(--green-card-bg);
+      border-radius: 24px;
+      padding: 24px 18px;
+      width: 100%;
+      max-width: 330px;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+      border: 2px solid rgba(212, 175, 55, 0.45);
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .photo-frame-wrapper {
+      position: relative;
+      width: 170px;
+      height: 170px;
+      margin: 0 auto 16px;
+    }
+
+    .photo-frame-ring {
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border-radius: 50%;
+      background: var(--gold-gradient);
+      padding: 3px;
+      animation: rotateRing 16s linear infinite;
+    }
+
+    @keyframes rotateRing {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .photo-frame {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #cce7d2;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.12);
+      border: 4px solid #ffffff;
+      cursor: default;
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      transition: transform 0.4s ease;
+    }
+
+    .person-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 2px;
+      line-height: 1.1;
+    }
+
+    .person-role {
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #8c6d16;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .person-bday {
+      background: #e2f2e5;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 16px;
+      border-radius: 25px;
+      font-size: 0.88rem;
+      color: var(--green-dark);
+      font-weight: 600;
+      border: 1.5px solid rgba(212, 175, 55, 0.55);
+    }
+
+    /* Centro que une la celebración de ambos */
+    .party-union {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 3px solid #d4af37;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 24px rgba(184, 134, 11, 0.35);
+      z-index: 5;
+      text-align: center;
+      margin: -10px 0;
+      animation: pulseBadge 2.8s infinite;
+      align-self: center;
+    }
+
+    @keyframes pulseBadge {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.06);
+      }
+    }
+
+    .party-union .number {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1;
+      font-family: 'Cormorant Garamond', serif;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .party-union .label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #7b6117;
+      font-weight: 700;
+    }
+
+    /* ============================================================
+       4. CRONOLOGÍA / EL PUNTO DE ENCUENTRO
+       ============================================================ */
+    .timeline-card {
+      background: var(--green-card-bg);
+      border-radius: 24px;
+      padding: 26px 16px;
+      margin: 25px 0;
+      text-align: center;
+      border: 2px solid rgba(212, 175, 55, 0.4);
+      box-shadow: var(--card-shadow);
+    }
+
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    @media (min-width: 600px) {
+      .timeline-grid {
+        grid-template-columns: 1fr 1.25fr 1fr;
+        align-items: center;
+      }
+    }
+
+    .timeline-box {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 16px 12px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+
+    .timeline-box.main-event {
+      background: linear-gradient(145deg, #ffffff 0%, #f6fbf7 100%);
+      border: 2px solid #d4af37;
+      box-shadow: 0 6px 18px rgba(212, 175, 55, 0.25);
+    }
+
+    .timeline-tag {
+      display: inline-block;
+      padding: 4px 12px;
+      background: #e2f2e5;
+      border-radius: 15px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 8px;
+    }
+
+    .main-event .timeline-tag {
+      background: var(--gold-gradient);
+      color: #2b1f02;
+    }
+
+    /* ============================================================
+       5. CUENTA REGRESIVA (SUPER FLUIDA EN MÓVILES)
+       ============================================================ */
+    .countdown-card {
+      background: var(--green-card-bg);
+      border-radius: 24px;
+      padding: 28px 16px;
+      margin: 25px 0;
+      text-align: center;
+      border: 2px solid rgba(212, 175, 55, 0.4);
+      box-shadow: var(--card-shadow);
+    }
+
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .countdown-box {
+      flex: 1 1 0px;
+      max-width: 78px;
+      background: #ffffff;
+      padding: 12px 4px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(22, 51, 30, 0.08);
+      border-bottom: 3px solid #d4af37;
+    }
+
+    .countdown-box .num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 6vw, 2.4rem);
+      font-weight: 700;
+      color: var(--green-dark);
+      line-height: 1;
+    }
+
+    .countdown-box .txt {
+      font-size: 0.62rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #557960;
+      font-weight: 700;
+      margin-top: 5px;
+    }
+
+    /* ============================================================
+       6. DETALLES DEL EVENTO (GRID MÓVIL)
+       ============================================================ */
+    .details-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin: 25px 0;
+    }
+
+    @media (min-width: 650px) {
+      .details-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 680px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+
+    .detail-card {
+      background: var(--green-card-bg);
+      border-radius: 20px;
+      padding: 24px 16px;
+      text-align: center;
+      border: 1.5px solid rgba(212, 175, 55, 0.35);
+      box-shadow: var(--card-shadow);
+    }
+
+    .detail-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: #ffffff;
+      color: #b38b1d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      margin: 0 auto 14px;
+      border: 2px solid #d4af37;
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+    }
+
+    .detail-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      margin-bottom: 6px;
+    }
+
+    .detail-text {
+      font-size: 0.9rem;
+      color: #4a6d54;
+      line-height: 1.5;
+    }
+
+    .detail-badge {
+      display: inline-block;
+      margin-top: 8px;
+      font-weight: 700;
+      color: #a37c16;
+      font-size: 1.05rem;
+    }
+
+    /* ============================================================
+       7. CONFIRMACIÓN RSVP & CONTADOR (+1 POR SESIÓN/MÓVIL)
+       ============================================================ */
+    .rsvp-card {
+      background: #ffffff;
+      border-radius: 26px;
+      padding: 34px 18px;
+      text-align: center;
+      border: 2.5px solid #d4af37;
+      box-shadow: 0 14px 40px rgba(22, 51, 30, 0.18);
+      margin-top: 30px;
+    }
+
+    /* Badge contador de confirmados */
+    .attendance-counter-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #eef8f0;
+      border: 2px solid #d4af37;
+      border-radius: 30px;
+      padding: 8px 20px;
+      margin-bottom: 18px;
+      box-shadow: 0 4px 12px rgba(184, 134, 11, 0.2);
+    }
+
+    .attendance-counter-badge .count-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #a47e1d;
+      line-height: 1;
+      min-width: 28px;
+      display: inline-block;
+      transition: transform 0.3s ease;
+    }
+
+    .attendance-counter-badge .count-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--green-dark);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .rsvp-status-note {
+      font-size: 0.82rem;
+      color: #43664d;
+      margin-top: 10px;
+      font-weight: 600;
+      min-height: 20px;
+    }
+
+    .actions-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-top: 18px;
+      width: 100%;
+    }
+
+    .btn-secondary {
+      background: var(--green-card-bg);
+      color: var(--green-dark);
+      border: 1.5px solid rgba(212, 175, 55, 0.65);
+      padding: 13px 20px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      width: 100%;
+      max-width: 290px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary:active {
+      transform: scale(0.97);
+      background: #ddedd2;
+    }
+
+    /* ============================================================
+       8. CONTROLES FLOTANTES MÓVILES
+       ============================================================ */
+    .floating-tools {
+      position: fixed;
+      bottom: 20px;
+      right: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 100;
+    }
+
+    .tool-btn {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 2px solid #d4af37;
+      color: #9c781a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    .tool-btn:active {
+      transform: scale(0.9);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px 10px 10px;
+      color: #3b5f45;
+      font-size: 0.82rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Canvas para partículas de polvo de oro -->
+  <canvas id="gold-dust-canvas"></canvas>
+
+  <!-- Sobre / Cortina de Entrada Táctil -->
+  <div class="envelope-overlay" id="envelopeOverlay">
+    <div class="envelope-box">
+      <div class="wax-seal" id="sealButton" title="Toca para abrir">
+        <span>50</span>
+      </div>
+      <p class="font-script" style="font-size: 1.6rem; color: #a47e1d; line-height: 1.2;">¡Nuestra Invitación!</p>
+      <h2 class="font-serif" style="font-size: 1.9rem; margin: 6px 0 12px; color: var(--green-dark);">Noe & Micaela</h2>
+      <p style="font-size: 0.88rem; color: #43664d; margin-bottom: 22px; line-height: 1.5;">
+        Celebramos nuestros 50 años de vida y queremos compartir este gran momento contigo.<br>
+        <strong>Toca el sello dorado para abrir</strong>
+      </p>
+      <button class="btn-gold" id="openInviteBtn">
+        <i class="fa-solid fa-envelope-open-text"></i> Abrir Invitación
+      </button>
+    </div>
+  </div>
+
+  <!-- Contenido Principal -->
+  <main class="main-wrapper">
+
+    <!-- Hero / Portada -->
+    <header class="hero">
+      <div class="badge-50">
+        <i class="fa-solid fa-sparkles" style="color: #b38b1d;"></i> 50 Años de Vida • Celebración Doble <i
+          class="fa-solid fa-sparkles" style="color: #b38b1d;"></i>
+      </div>
+
+      <h1 class="couple-title">Noe & Micaela</h1>
+      <p class="hero-subtitle">¡Cumplimos <span style="color: #a47e1d;">50 Años</span>!</p>
+
+      <div class="gold-divider">
+        <i class="fa-solid fa-champagne-glasses" style="color: #c49924; font-size: 1.15rem;"></i>
+      </div>
+
+      <p class="hero-text">
+        Dos personas celebrando el mismo medio siglo de vida. Uno llegó un 7 de Noviembre, la otra un 9 de Noviembre, y
+        el destino nos reúne para festejar en grande en el centro exacto.
+      </p>
+    </header>
+
+    <!-- Sección de Cumpleañeros / Fotos PNG Fijas -->
+    <section class="couple-section">
+
+      <!-- Noe (Cumple 7 de Noviembre) -->
+      <article class="person-card" id="cardNoe">
+        <div class="photo-frame-wrapper">
+          <div class="photo-frame-ring"></div>
+          <div class="photo-frame">
+            <img id="imgPerson1" src="persona1.jpeg" alt="Noe - 50 años"
+              onerror="useFallbackImage(this, 'Noe', '7 Nov')">
+          </div>
+        </div>
+        <h2 class="person-name">Noe</h2>
+        <p class="person-role">Medio Siglo de Aventuras</p>
+        <div class="person-bday">
+          <i class="fa-regular fa-calendar-check" style="color: #b38b1d;"></i> Cumple: <strong>7 de Noviembre</strong>
+        </div>
+      </article>
+
+      <!-- Emblema de Unión Central (50 Años) -->
+      <div class="party-union">
+        <span class="number">50</span>
+        <span class="label">Años</span>
+        <i class="fa-solid fa-champagne-glasses" style="color: #c49924; font-size: 0.75rem; margin-top: 2px;"></i>
+      </div>
+
+      <!-- Micaela (Cumple 9 de Noviembre) -->
+      <article class="person-card" id="cardMicaela">
+        <div class="photo-frame-wrapper">
+          <div class="photo-frame-ring"></div>
+          <div class="photo-frame">
+            <img id="imgPerson2" src="persona2.jpeg" alt="Micaela - 50 años"
+              onerror="useFallbackImage(this, 'Micaela', '9 Nov')">
+          </div>
+        </div>
+        <h2 class="person-name">Micaela</h2>
+        <p class="person-role">Medio Siglo de Alegría</p>
+        <div class="person-bday">
+          <i class="fa-regular fa-calendar-check" style="color: #b38b1d;"></i> Cumple: <strong>9 de Noviembre</strong>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- La Historia / El Punto de Encuentro -->
+    <section class="timeline-card">
+      <p class="font-script" style="font-size: 1.45rem; color: #a47e1d; margin-bottom: 2px;">El punto de encuentro</p>
+      <h3 class="font-serif" style="font-size: 1.8rem; color: var(--green-dark);">¿Por qué el 8 de Noviembre?</h3>
+      <p style="font-size: 0.88rem; color: #43664d; max-width: 520px; margin: 4px auto 0;">
+        ¡Porque estamos en el medio exacto entre el cumpleaños de Noe (7/11) y el de Micaela (9/11)!
+      </p>
+
+      <div class="timeline-grid">
+        <div class="timeline-box">
+          <span class="timeline-tag">7 de Noviembre</span>
+          <h4 style="font-size: 1.05rem; color: var(--green-dark);">Cumpleaños de Noe</h4>
+          <p style="font-size: 0.8rem; color: #557960;">¡Comienza el festejo!</p>
+        </div>
+
+        <div class="timeline-box main-event">
+          <span class="timeline-tag"><i class="fa-solid fa-champagne-glasses"></i> 8 de Noviembre • 4:00 PM</span>
+          <h4 class="font-serif" style="font-size: 1.35rem; color: #9c781a; font-weight: 700;">¡NUESTRA GRAN FIESTA!
+          </h4>
+          <p style="font-size: 0.85rem; color: var(--green-dark); font-weight: 600;">Brindamos por los 100 años (50 +
+            50)
+          </p>
+        </div>
+
+        <div class="timeline-box">
+          <span class="timeline-tag">9 de Noviembre</span>
+          <h4 style="font-size: 1.05rem; color: var(--green-dark);">Cumple de Micaela</h4>
+          <p style="font-size: 0.8rem; color: #557960;">¡Seguimos la celebración!</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cuenta Regresiva Responsiva -->
+    <section class="countdown-card">
+      <p class="font-script" style="font-size: 1.45rem; color: #a47e1d; margin-bottom: 2px;">¡Empieza la cuenta atrás!
+      </p>
+      <h3 class="font-serif" style="font-size: 1.7rem; color: var(--green-dark);">Falta muy poco para el 8 de Noviembre
+      </h3>
+      <p style="font-size: 0.85rem; color: #486d52;">A las 4:00 PM nos vemos en Casa Gallegos</p>
+
+      <div class="countdown-grid">
+        <div class="countdown-box">
+          <div class="num" id="days">00</div>
+          <div class="txt">Días</div>
+        </div>
+        <div class="countdown-box">
+          <div class="num" id="hours">00</div>
+          <div class="txt">Horas</div>
+        </div>
+        <div class="countdown-box">
+          <div class="num" id="minutes">00</div>
+          <div class="txt">Min</div>
+        </div>
+        <div class="countdown-box">
+          <div class="num" id="seconds">00</div>
+          <div class="txt">Seg</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detalles del Evento (Con Casa Gallegos) -->
+    <section class="details-grid">
+      <div class="detail-card">
+        <div class="detail-icon">
+          <i class="fa-regular fa-clock"></i>
+        </div>
+        <h4 class="detail-title">¿Cuándo?</h4>
+        <p class="detail-text">Sábado 8 de Noviembre</p>
+        <span class="detail-badge">4:00 PM</span>
+      </div>
+
+      <div class="detail-card">
+        <div class="detail-icon">
+          <i class="fa-solid fa-location-dot"></i>
+        </div>
+        <h4 class="detail-title">¿Dónde?</h4>
+        <p class="detail-text" id="venueText">
+          <strong style="font-size: 1.15rem; color: #23472c;">Casa Gallegos</strong><br>
+          ¡Te esperamos para brindar!
+        </p>
+        <a href="https://maps.app.goo.gl/61deadf4W1vkyVkR6" target="_blank" rel="noopener noreferrer"
+          class="btn-secondary" style="margin-top: 12px; font-size: 0.72rem; padding: 8px 14px; max-width: 200px;">
+          <i class="fa-solid fa-map-location-dot"></i> Abrir en Maps
+        </a>
+      </div>
+    </section>
+
+    <!-- Confirmación de Asistencia (RSVP con contador +1 por sesión/móvil) -->
+    <section class="rsvp-card">
+      <i class="fa-solid fa-champagne-glasses" style="font-size: 2.2rem; color: #d4af37; margin-bottom: 10px;"></i>
+
+      <!-- Contador visible de confirmados -->
+      <div>
+        <div class="attendance-counter-badge">
+          <i class="fa-solid fa-users" style="color: #b38b1d; font-size: 1.1rem;"></i>
+          <span class="count-number" id="confirmedCount">0</span>
+          <span class="count-label">Confirmados</span>
+        </div>
+      </div>
+
+      <h3 class="font-serif" style="font-size: 2.1rem; color: var(--green-dark);">¿Nos acompañas?</h3>
+      <p style="font-size: 0.92rem; color: #43664d; max-width: 480px; margin: 6px auto; line-height: 1.5;">
+        Toca el botón para registrar tu asistencia. Se sumará tu presencia (+1) a nuestra lista de invitados.
+      </p>
+
+      <div class="actions-stack">
+        <!-- Botón que solo añade 1 y solo permite un clic por sesión/móvil -->
+        <button class="btn-gold" id="btnConfirmAttendance" onclick="handleConfirmAttendance()">
+          <i class="fa-solid fa-check"></i> Confirmar Asistencia
+        </button>
+
+        <p class="rsvp-status-note" id="rsvpStatusNote"></p>
+
+        <button class="btn-secondary" onclick="addToGoogleCalendar()">
+          <i class="fa-regular fa-calendar-plus"></i> Agendar en Calendario
+        </button>
+
+        <button class="btn-secondary" onclick="triggerFireworks()">
+          <i class="fa-solid fa-sparkles"></i> ¡Lanzar Brindis y Confeti!
+        </button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p class="font-serif" style="font-size: 1.35rem; color: #2e5539; margin-bottom: 4px;">
+        Noe & Micaela • Nuestros 50 Años
+      </p>
+      <p>Celebración el 8 de Noviembre a las 4:00 PM • Casa Gallegos</p>
+    </footer>
+
+  </main>
+
+  <!-- Botones Flotantes (Música y Confeti) -->
+  <div class="floating-tools">
+    <button class="tool-btn" id="musicToggleBtn" onclick="toggleMusic()" title="Música de celebración">
+      <i class="fa-solid fa-music"></i>
+    </button>
+    <button class="tool-btn" onclick="triggerFireworks()" title="Lanzar confeti">
+      <i class="fa-solid fa-sparkles"></i>
+    </button>
+  </div>
+
+  <script>
+    // -------------------------------------------------------------
+    // 1. Apertura del Sobre y Confeti
+    // -------------------------------------------------------------
+    const envelopeOverlay = document.getElementById('envelopeOverlay');
+    const sealButton = document.getElementById('sealButton');
+    const openInviteBtn = document.getElementById('openInviteBtn');
+
+    function openInvitation() {
+      envelopeOverlay.classList.add('opened');
+      triggerFireworks();
+      playChimeSound();
+    }
+
+    sealButton.addEventListener('click', openInvitation);
+    openInviteBtn.addEventListener('click', openInvitation);
+
+    // -------------------------------------------------------------
+    // 2. Partículas Doradas en Canvas
+    // -------------------------------------------------------------
+    const canvas = document.getElementById('gold-dust-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2.5 + 0.8;
+        this.speedY = Math.random() * 0.4 + 0.15;
+        this.speedX = (Math.random() - 0.5) * 0.25;
+        this.opacity = Math.random() * 0.7 + 0.3;
+      }
+      update() {
+        this.y -= this.speedY;
+        this.x += this.speedX;
+        if (this.y < -10 || this.x < -10 || this.x > canvas.width + 10) {
+          this.reset();
+          this.y = canvas.height + 10;
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(218, 175, 55, ${this.opacity})`;
+        ctx.shadowBlur = 6;
+        ctx.shadowColor = '#d4af37';
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 35; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // -------------------------------------------------------------
+    // 3. Explosión de Confeti (Verde Pastel + Oro + Blanco)
+    // -------------------------------------------------------------
+    function triggerFireworks() {
+      const colors = ['#d4af37', '#fbe886', '#b2dcb8', '#ffffff', '#c59b27'];
+      confetti({
+        particleCount: 60,
+        spread: 70,
+        origin: { y: 0.65 },
+        colors: colors
+      });
+      setTimeout(() => {
+        confetti({
+          particleCount: 40,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: colors
+        });
+      }, 200);
+      setTimeout(() => {
+        confetti({
+          particleCount: 40,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: colors
+        });
+      }, 350);
+    }
+
+    // -------------------------------------------------------------
+    // 4. Cuenta Regresiva (8 de Noviembre 4:00 PM)
+    // -------------------------------------------------------------
+    function updateCountdown() {
+      const now = new Date();
+      let targetYear = now.getFullYear();
+      let targetDate = new Date(targetYear, 10, 8, 16, 0, 0); // Mes 10 = Noviembre
+
+      if (now > targetDate) {
+        targetDate = new Date(targetYear + 1, 10, 8, 16, 0, 0);
+      }
+
+      const diff = targetDate - now;
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const m = Math.floor((diff / 1000 / 60) % 60);
+      const s = Math.floor((diff / 1000) % 60);
+
+      document.getElementById('days').innerText = String(d).padStart(2, '0');
+      document.getElementById('hours').innerText = String(h).padStart(2, '0');
+      document.getElementById('minutes').innerText = String(m).padStart(2, '0');
+      document.getElementById('seconds').innerText = String(s).padStart(2, '0');
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // -------------------------------------------------------------
+    // 5. Fallback Elegante de Imagen SVG si no carga el PNG
+    // -------------------------------------------------------------
+    function useFallbackImage(img, label, bday) {
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">
+          <defs>
+            <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#d8eedb" />
+              <stop offset="100%" stop-color="#b2dcb8" />
+            </linearGradient>
+            <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#f6e27a" />
+              <stop offset="100%" stop-color="#c59b27" />
+            </linearGradient>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#g)" />
+          <circle cx="150" cy="110" r="46" fill="#ffffff" stroke="url(#gold)" stroke-width="3"/>
+          <path d="M 85 240 C 90 180, 210 180, 215 240 Z" fill="#ffffff" stroke="url(#gold)" stroke-width="3"/>
+          <text x="150" y="275" font-family="'Cormorant Garamond', serif" font-size="22" font-weight="bold" fill="#1b3b22" text-anchor="middle">${label}</text>
+          <circle cx="150" cy="110" r="16" fill="url(#gold)" opacity="0.35"/>
+          <text x="150" y="117" font-family="'Montserrat', sans-serif" font-size="16" font-weight="bold" fill="#4d3b07" text-anchor="middle">50</text>
+        </svg>
+      `;
+      img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    }
+
+    // -------------------------------------------------------------
+    // 6. Confirmación: Contador funcional y real que inicia en 0 (1 clic por sesión/móvil)
+    // -------------------------------------------------------------
+    const BASE_ATTENDEES = 0; // Inicia exactamente en 0
+    const STORAGE_KEY_CONFIRMED = 'rsvp_confirmed_noe_micaela_v3';
+    const STORAGE_KEY_COUNT = 'rsvp_count_noe_micaela_v3';
+
+    function initAttendanceCounter() {
+      const btn = document.getElementById('btnConfirmAttendance');
+      const countEl = document.getElementById('confirmedCount');
+      const noteEl = document.getElementById('rsvpStatusNote');
+
+      // Soporte para reiniciar si se abre con ?reset=1
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('reset') === '1') {
+        localStorage.removeItem(STORAGE_KEY_CONFIRMED);
+        localStorage.removeItem(STORAGE_KEY_COUNT);
+        sessionStorage.clear();
+      }
+
+      // Obtener contador guardado (empieza en 0 si no existe)
+      let storedCount = localStorage.getItem(STORAGE_KEY_COUNT);
+      let currentCount = storedCount !== null ? parseInt(storedCount, 10) : BASE_ATTENDEES;
+      if (isNaN(currentCount) || currentCount < 0) {
+        currentCount = 0;
+      }
+      countEl.innerText = currentCount;
+
+      // Verificar si ya se confirmó en este móvil/sesión
+      const alreadyConfirmed = localStorage.getItem(STORAGE_KEY_CONFIRMED) === 'true' || sessionStorage.getItem(STORAGE_KEY_CONFIRMED) === 'true';
+      if (alreadyConfirmed) {
+        btn.classList.add('confirmed');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> ¡Asistencia Confirmada! ✓';
+        noteEl.innerHTML = '<i class="fa-solid fa-champagne-glasses" style="color:#d4af37;"></i> Ya has registrado tu asistencia desde este móvil. ¡Te esperamos en Casa Gallegos!';
+      }
+    }
+
+    function handleConfirmAttendance() {
+      const btn = document.getElementById('btnConfirmAttendance');
+      const countEl = document.getElementById('confirmedCount');
+      const noteEl = document.getElementById('rsvpStatusNote');
+
+      // Validar si ya confirmó en este móvil o sesión
+      if (localStorage.getItem(STORAGE_KEY_CONFIRMED) === 'true' || sessionStorage.getItem(STORAGE_KEY_CONFIRMED) === 'true') {
+        noteEl.innerText = 'Ya has registrado tu asistencia desde este dispositivo.';
+        return;
+      }
+
+      // Añadir exactamente 1 al contador
+      let count = parseInt(localStorage.getItem(STORAGE_KEY_COUNT), 10);
+      if (isNaN(count)) count = 0;
+      count += 1;
+
+      // Guardar en almacenamiento del dispositivo
+      localStorage.setItem(STORAGE_KEY_COUNT, count);
+      localStorage.setItem(STORAGE_KEY_CONFIRMED, 'true');
+      sessionStorage.setItem(STORAGE_KEY_CONFIRMED, 'true');
+
+      // Animación en el contador
+      countEl.style.transform = 'scale(1.4)';
+      countEl.innerText = count;
+      setTimeout(() => {
+        countEl.style.transform = 'scale(1)';
+      }, 300);
+
+      // Actualizar botón y deshabilitar nuevos clics
+      btn.classList.add('confirmed');
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-circle-check"></i> ¡Asistencia Confirmada! (+1)';
+      noteEl.innerHTML = '✨ ¡Genial! Tu asistencia quedó registrada (+1). ¡Gracias por acompañarnos!';
+
+      triggerFireworks();
+      playChimeSound();
+    }
+
+    // Inicializar estado del contador al cargar
+    document.addEventListener('DOMContentLoaded', initAttendanceCounter);
+    initAttendanceCounter();
+
+    function addToGoogleCalendar() {
+      const title = encodeURIComponent('¡50 Años de Noe & Micaela! 🎉');
+      const details = encodeURIComponent('Celebración de 50 años de Noe y Micaela en Casa Gallegos. Brindis a las 4:00 PM. Ubicación en Maps: https://maps.app.goo.gl/61deadf4W1vkyVkR6');
+      const venue = encodeURIComponent('Casa Gallegos, https://maps.app.goo.gl/61deadf4W1vkyVkR6');
+
+      const now = new Date();
+      let year = now.getFullYear();
+      let d = new Date(year, 10, 8);
+      if (now > d) year += 1;
+
+      const start = `${year}1108T210000Z`;
+      const end = `${year}1109T040000Z`;
+
+      const gcal = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}&location=${venue}`;
+      window.open(gcal, '_blank');
+    }
+
+    // -------------------------------------------------------------
+    // 7. Música y Sonidos Sutiles
+    // -------------------------------------------------------------
+    let audioCtx = null;
+    function playChimeSound() {
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const chords = [523.25, 659.25, 783.99, 1046.50];
+        chords.forEach((freq, idx) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime + idx * 0.12);
+
+          gain.gain.setValueAtTime(0, audioCtx.currentTime + idx * 0.12);
+          gain.gain.linearRampToValueAtTime(0.12, audioCtx.currentTime + idx * 0.12 + 0.05);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + idx * 0.12 + 1.1);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(audioCtx.currentTime + idx * 0.12);
+          osc.stop(audioCtx.currentTime + idx * 0.12 + 1.2);
+        });
+      } catch (e) { }
+    }
+
+    let isPlayingLoop = false;
+    let musicInterval = null;
+    function toggleMusic() {
+      const btn = document.getElementById('musicToggleBtn');
+      if (!isPlayingLoop) {
+        isPlayingLoop = true;
+        btn.innerHTML = '<i class="fa-solid fa-volume-high" style="color: #16331e;"></i>';
+        playChimeSound();
+        musicInterval = setInterval(playChimeSound, 11000);
+      } else {
+        isPlayingLoop = false;
+        clearInterval(musicInterval);
+        btn.innerHTML = '<i class="fa-solid fa-music"></i>';
+      }
+    }
+  </script>
+</body>
+
+</html>
